@@ -19,7 +19,14 @@ function [ res ] = simulateStep(out, in, v, k, q )
 res = in;
 for i=1:length(in)
     
-    theta = wrapTo360(out(i).val*90 + in(i).theta);
+    
+    theta = out(i).val*90 + in(i).theta;
+    if(theta >= 360)
+        theta = theta - 360;
+    elseif (theta < 0)
+        theta = theta + 360;
+    end
+    
     
     if(in(i).x == in(i).xd && in(i).y == in(i).yd)
         res(i).x = in(i).x;

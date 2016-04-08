@@ -22,12 +22,56 @@
 if (isempty(state))
     state.mode = 0; 
 end
+%need this statement otherwise it throws and error
+out.val = 0;
 
-% Code to generate controller output
-if (state.mode == 0)
-    out.val = +1;
-    state.mode = 1;
-elseif (state.mode == 1)
-    out.val = 0;
-    state.mode = 0;
+%Basic path finding algorithm
+%Plane follows current trajectory if target is further along current
+%direction of flight. If it is at or past target along current direction it
+%will turn in the direction necessayr to head to target along perpindicular
+%axis.
+if(in.theta == 0)
+    if(in.x < in.xd)
+        out.val = 0;
+    elseif(in.y < in.yd)
+        out.val = 1;
+    elseif(in.y > in.yd)
+        out.val = -1;
+    elseif(in.x > in.xd)
+        out.val = -1;
+    end
+elseif(in.theta == 90)
+    if(in.y < in.yd)
+        out.val = 0;
+    elseif(in.x < in.xd)
+        out.val = -1;
+    elseif(in.x > in.xd)
+        out.val = 1;
+    elseif(in.y > in.yd)
+        out.val = -1;
+    end
+elseif(in.theta == 180)
+    if(in.x > in.xd)
+        out.val = 0;
+    elseif(in.y < in.yd)
+        out.val = -1;
+    elseif(in.y > in.yd)
+        out.val = 1;
+    elseif(in.x < in.xd)
+        out.val = -1;
+    end
+elseif(in.theta == 270)
+    if(in.y > in.yd)
+        out.val = 0;
+    elseif(in.x < in.xd)
+        out.val = 1;
+    elseif(in.x > in.xd)
+        out.val = -1;
+    elseif(in.y > in.yd)
+        out.val = -1;
+    end
 end
+
+% code for collision avoidance
+
+    
