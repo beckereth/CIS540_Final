@@ -10,6 +10,9 @@ function [ flag ] = safetyMonitor( in1, in2 )
 % flag: true if the safety is voilated and false otherwise.
 
 flag = false;
+if(in1.x == in2.x && in1.y == in2.y)
+    flag = true;
+end
 
 end
 
