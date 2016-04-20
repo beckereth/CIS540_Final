@@ -38,10 +38,11 @@ for i=1:timeout
     [out(2), s2] = controller(in(2), s2);
 
     % Simulate the motion of aircraft for next k steps.
+    inp = in;
     in = simulateStep(out, in, v, k, q);
 
     % Check aircraft collision avoidance
-    if( safetyMonitor( in(1), in(2) ) && (in(1).x ~= in(1).xd || in(1).y ~= in(1).yd) && (in(2).x ~= in(2).xd || in(2).y ~= in(2).yd))
+    if( safetyMonitor( in(1), in(2), inp(1), inp(2) ) && (in(1).x ~= in(1).xd || in(1).y ~= in(1).yd) && (in(2).x ~= in(2).xd || in(2).y ~= in(2).yd))
         return;
     end
 end

@@ -36,18 +36,24 @@ if(not(isempty(in.m)))
     [other_next_x, other_next_y] = nextPosition(in.m.x, in.m.y, in.m.theta, other_out.val);
     
     if(self_next_x == other_next_x && self_next_y == other_next_y)
-        if (out.val == -1)
-            out.val = 1;
-        else
-            out.val = -1;
-        end
+        out = avoidCollision(out);
+    elseif(self_next_x == in.m.x && self_next_y == in.m.y && other_next_x == in.x && other_next_y == in.y)
+        out = avoidCollision(out);
     end
 
 end
  
  end
  
- function [ out, state ] = findPath( in, state )
+function [ out ] = avoidCollision( out )
+    if (out.val == -1)
+        out.val = 1;
+    else
+        out.val = -1;
+    end
+end
+ 
+function [ out, state ] = findPath( in, state )
 %Basic path finding algorithm
 %Plane follows current trajectory if target is further along current
 %direction of flight. If it is at or past target along current direction it
